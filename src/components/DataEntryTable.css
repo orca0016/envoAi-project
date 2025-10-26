@@ -2,6 +2,7 @@
   background: white;
   padding: 1.5rem;
   border-radius: 8px;
+  max-width:50%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border: 2px solid #e0e0e0;
 }
@@ -23,7 +24,10 @@
   gap: 1rem;
   margin-bottom: 1rem;
 }
-
+.form-input{
+  background-color: #d3d3d3;
+  color: #333;
+}
 .form-group {
   display: flex;
   flex-direction: column;
@@ -41,6 +45,7 @@
 }
 
 .entries-section {
+  overflow-x: auto;
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 2px solid #e0e0e0;
@@ -76,6 +81,7 @@
 
 .entries-table {
   width: 100%;
+  max-width: 100%;
   margin-top: 1rem;
 }
 
@@ -89,6 +95,11 @@
   background: #c82333;
 }
 
+@media (max-width: 1120px) {
+  .data-entry-container{
+    max-width: 100%;
+  }
+}
 @media (max-width: 768px) {
   .entry-form {
     grid-template-columns: 1fr;

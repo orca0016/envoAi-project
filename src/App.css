@@ -128,6 +128,7 @@ table td {
   padding: 0.75rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  color: #333;
 }
 
 table th {
@@ -138,4 +139,20 @@ table th {
 
 table tr:hover {
   background: #f8f9fa;
+}
+
+@media (max-width: 450px) {
+  .main-content {
+    padding: 0rem;
+  }
+  .page-container {
+    border-radius: 0;
+    padding: 1rem;
+  }
+  .navigation{
+    padding: 1rem 0.5rem ;
+  }
+  .nav-links{
+    flex-direction: column;
+  }
 }

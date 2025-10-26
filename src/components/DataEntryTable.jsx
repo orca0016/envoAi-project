@@ -84,24 +84,26 @@ function DataEntryTable() {
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input
-            type="text"
             id="name"
+            type="text"
             name="name"
             value={formData.name}
-            onChange={handleInputChange}
+            className='form-input'
             placeholder="Enter name"
+            onChange={handleInputChange}
           />
         </div>
 
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
-            type="email"
             id="email"
+            type="email"
             name="email"
             value={formData.email}
-            onChange={handleInputChange}
+            className='form-input'
             placeholder="Enter email"
+            onChange={handleInputChange}
           />
         </div>
 
@@ -111,10 +113,11 @@ function DataEntryTable() {
             type="text"
             id="department"
             name="department"
+            className='form-input'
             value={formData.department}
             onChange={handleInputChange}
             placeholder="Enter department"
-          />
+            />
         </div>
 
         <div className="form-group">
@@ -124,8 +127,9 @@ function DataEntryTable() {
             id="phone"
             name="phone"
             value={formData.phone}
-            onChange={handleInputChange}
+            className='form-input'
             placeholder="Enter phone"
+            onChange={handleInputChange}
           />
         </div>
 

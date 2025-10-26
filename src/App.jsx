@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+  import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import './App.css'
 import LayoutChallenge from './pages/LayoutChallenge'
 import BugHunt from './pages/BugHunt'
