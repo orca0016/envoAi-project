@@ -24,7 +24,6 @@ function BugHunt() {
     return () => clearInterval(time);
   }, [counter]);
 
-  
   // Bug: Was summing quantities instead of calculating total price
   // Fix: Changed = to * for correct price calculation
   const calculateTotal = () => {
@@ -35,8 +34,10 @@ function BugHunt() {
     return total;
   };
 
+  // Fix discount calculation: was using wrong formula
+  // Now correctly calculates: total - (total * discount / 100)
   const applyDiscount = (total) => {
-    return total + total * discount;
+    return total - total * (discount / 100);
   };
 
   const handleLogin = () => {
