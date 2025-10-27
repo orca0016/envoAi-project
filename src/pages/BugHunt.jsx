@@ -67,8 +67,11 @@ function BugHunt() {
     );
   };
 
+  // Fix item removal: was keeping all items EXCEPT the selected one
+  // Added ! to filter out only the item to be removed
+  // Now correctly removes only the targeted item
   const removeItem = (id) => {
-    setItems(items.filter((item) => item.id == id));
+    setItems(items.filter((item) => item.id !== id));
   };
 
   const total = calculateTotal();
