@@ -56,9 +56,14 @@ function BugHunt() {
     setUsername("");
   };
 
+  // Fix quantity update: was overwriting entire item object
+  // Now preserves all item properties while updating quantity
+  // Using spread operator to maintain existing data
   const updateQuantity = (id, newQuantity) => {
     setItems(
-      items.map((item) => (item.id === id ? { quantity: newQuantity } : item))
+      items.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
     );
   };
 
