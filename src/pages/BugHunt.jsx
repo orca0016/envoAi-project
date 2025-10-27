@@ -12,10 +12,10 @@ function BugHunt() {
   const [username, setUsername] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // first bug was here
-  // -best way to create a timer
-  // -old solution is not optimize and performance
-  //-also if component will unmount the timer keep working and this not good
+  // Timer bug fix:
+  // - old: Infinite re-renders, no cleanup (memory leak)
+  // - new: setInterval with proper cleanup
+  // - result: 1s intervals, no memory leaks
   useEffect(() => {
     const time = setInterval(() => {
       setCounter(counter + 1);
@@ -25,10 +25,12 @@ function BugHunt() {
   }, [counter]);
 
   
+  // Bug: Was summing quantities instead of calculating total price
+  // Fix: Changed = to * for correct price calculation
   const calculateTotal = () => {
     let total = 0;
     for (let i = 0; i < items.length; i++) {
-      total += items[i].price = items[i].quantity;
+      total += items[i].price * items[i].quantity;
     }
     return total;
   };
