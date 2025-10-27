@@ -40,16 +40,19 @@ function BugHunt() {
     return total - total * (discount / 100);
   };
 
+  // Fix login/logout state inversion
+  // Login sets isLoggedIn to true, logout sets to false
+  // Previously had reversed logic
   const handleLogin = () => {
     if (username.length < 3) {
       alert("Username must be at least 3 characters");
       return;
     }
-    setIsLoggedIn(false);
+    setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(true);
+    setIsLoggedIn(false);
     setUsername("");
   };
 
