@@ -1,107 +1,133 @@
-import { useState, useEffect } from 'react'
-import './DataEntryTable.css'
+import { useContext, useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import { DialogContext } from "../context/DialogContext";
+import "./DataEntryTable.css";
+import { MoreInfoIcon } from "./icons";
 
 function DataEntryTable() {
+  const { setCurrentDataId, setIsDialogOpen, currentDataId } =
+    useContext(DialogContext);
+
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    department: '',
-    phone: ''
-  })
-  
-  const [entries, setEntries] = useState([])
+    name: "",
+    email: "",
+    department: "",
+    phone: "",
+  });
+
+  const [entries, setEntries] = useState([]);
 
   useEffect(() => {
-    const savedData = localStorage.getItem('userEntries')
+    // -when a entry data deleted re get data and other time do nothing.
+    if (currentDataId !== -1) return;
+    const savedData = localStorage.getItem("userEntries");
     if (savedData) {
       try {
-        setEntries(JSON.parse(savedData))
+        setEntries(JSON.parse(savedData));
       } catch (error) {
-        console.error('Error loading data:', error)
+        console.error("Error loading data:", error);
       }
     }
-  }, [])
+  }, [currentDataId]);
 
   useEffect(() => {
     if (entries.length > 0) {
-      localStorage.setItem('userEntries', JSON.stringify(entries))
+      localStorage.setItem("userEntries", JSON.stringify(entries));
     }
-  }, [entries])
+  }, [entries]);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
+    const { name, value } = e.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    
-    if (!formData.name || !formData.email || !formData.department || !formData.phone) {
-      alert('Please fill in all fields')
-      return
+    e.preventDefault();
+
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.department ||
+      !formData.phone
+    ) {
+      alert("Please fill in all fields");
+      return;
     }
 
     const newEntry = {
       ...formData,
       id: Date.now(),
-      timestamp: new Date().toLocaleString()
-    }
+      timestamp: new Date().toLocaleString(),
+    };
 
-    setEntries(prev => [...prev, newEntry])
-    
+    setEntries((prev) => [...prev, newEntry]);
+
     setFormData({
-      name: '',
-      email: '',
-      department: '',
-      phone: ''
-    })
-  }
-
-  const handleDelete = (id) => {
-    setEntries(prev => {
-      const updated = prev.filter(entry => entry.id !== id)
-      localStorage.setItem('userEntries', JSON.stringify(updated))
-      return updated
-    })
-  }
+      name: "",
+      email: "",
+      department: "",
+      phone: "",
+    });
+  };
+  const handleShowDetail = (id) => {
+    setCurrentDataId(id);
+    setIsDialogOpen(true);
+  };
 
   const handleClearAll = () => {
-    if (window.confirm('Are you sure you want to clear all entries?')) {
-      setEntries([])
-      localStorage.removeItem('userEntries')
-    }
-  }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, clear it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setEntries([]);
+        localStorage.removeItem("userEntries");
+        Swal.fire({
+          title: "data is cleared!",
+          text: "Your list  has been deleted.",
+          icon: "success",
+        });
+      }
+    });
+  };
 
   return (
     <div className="data-entry-container">
       <h3>User Data Entry Form</h3>
       <p className="subtitle">Enter 4 parameters and save to local database</p>
-      
+
       <form onSubmit={handleSubmit} className="entry-form">
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input
-            type="text"
             id="name"
+            type="text"
             name="name"
             value={formData.name}
-            onChange={handleInputChange}
+            className="form-input"
             placeholder="Enter name"
+            onChange={handleInputChange}
           />
         </div>
 
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input
-            type="email"
             id="email"
+            type="email"
             name="email"
             value={formData.email}
-            onChange={handleInputChange}
+            className="form-input"
             placeholder="Enter email"
+            onChange={handleInputChange}
           />
         </div>
 
@@ -111,6 +137,7 @@ function DataEntryTable() {
             type="text"
             id="department"
             name="department"
+            className="form-input"
             value={formData.department}
             onChange={handleInputChange}
             placeholder="Enter department"
@@ -124,8 +151,9 @@ function DataEntryTable() {
             id="phone"
             name="phone"
             value={formData.phone}
-            onChange={handleInputChange}
+            className="form-input"
             placeholder="Enter phone"
+            onChange={handleInputChange}
           />
         </div>
 
@@ -147,29 +175,29 @@ function DataEntryTable() {
         ) : (
           <table className="entries-table">
             <thead>
+              {/* ===================
+              i remove some columns for a better responsive table .
+                -to see other  information detail user most got to the modal section 
+              =================== */}
               <tr>
                 <th>Name</th>
-                <th>Email</th>
-                <th>Department</th>
-                <th>Phone</th>
-                <th>Added</th>
-                <th>Action</th>
+                <th data-desktop="true">Email</th>
+                <th data-desktop="true">Phone</th>
+                <th style={{ width: "100px" }}>Action</th>
               </tr>
             </thead>
             <tbody>
-              {entries.map(entry => (
+              {entries.map((entry) => (
                 <tr key={entry.id}>
                   <td>{entry.name}</td>
-                  <td>{entry.email}</td>
-                  <td>{entry.department}</td>
-                  <td>{entry.phone}</td>
-                  <td>{entry.timestamp}</td>
-                  <td>
-                    <button 
-                      onClick={() => handleDelete(entry.id)}
-                      className="delete-btn"
+                  <td data-desktop="true">{entry.email}</td>
+                  <td data-desktop="true">{entry.phone}</td>
+                  <td className="action-buttons-modal-entry">
+                    <button
+                      onClick={() => handleShowDetail(entry.id)}
+                      className="close-btn"
                     >
-                      Delete
+                      <MoreInfoIcon />
                     </button>
                   </td>
                 </tr>
@@ -179,8 +207,7 @@ function DataEntryTable() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default DataEntryTable
-
+export default DataEntryTable;

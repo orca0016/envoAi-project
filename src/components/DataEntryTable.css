@@ -2,6 +2,7 @@
   background: white;
   padding: 1.5rem;
   border-radius: 8px;
+  max-width: 50%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border: 2px solid #e0e0e0;
 }
@@ -23,7 +24,10 @@
   gap: 1rem;
   margin-bottom: 1rem;
 }
-
+.form-input {
+  background-color: #d3d3d3;
+  color: #333;
+}
 .form-group {
   display: flex;
   flex-direction: column;
@@ -41,6 +45,7 @@
 }
 
 .entries-section {
+  overflow-x: auto;
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 2px solid #e0e0e0;
@@ -62,6 +67,15 @@
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
 }
+.close-btn {
+  color: #28a745;
+  background-color: transparent;
+  padding: 0.5rem ;
+  font-size: 0.9rem;
+}
+.close-btn:hover {
+  color: white;
+}
 
 .clear-btn:hover {
   background: #c82333;
@@ -76,26 +90,53 @@
 
 .entries-table {
   width: 100%;
+  max-width: 100%;
   margin-top: 1rem;
 }
 
 .delete-btn {
-  background: #dc3545;
-  padding: 0.4rem 0.8rem;
+  color: #dc3545;
+  background-color: transparent;
+  padding: 0.5rem;
   font-size: 0.85rem;
 }
 
 .delete-btn:hover {
   background: #c82333;
+  color: white;
 }
-
+.show-column-in-desktop {
+  display: block;
+}
+@media (max-width: 1120px) {
+  .data-entry-container {
+    max-width: 100%;
+  }
+}
 @media (max-width: 768px) {
   .entry-form {
     grid-template-columns: 1fr;
   }
-  
+  .show-column-in-desktop {
+    display: none;
+  }
+
   .entry-form button {
     grid-column: span 1;
   }
 }
 
+
+/* ===============================================
+responsive table media configurations.
+=============================================== */
+@media (min-width: 1025px) {
+  [data-desktop="true"] {
+    display: table-cell;
+  }
+}
+@media (max-width: 768px) {
+  [data-desktop="true"] {
+    display: none;
+  }
+}

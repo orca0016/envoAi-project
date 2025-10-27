@@ -1,9 +1,15 @@
 import './LayoutChallenge.css'
 import DataEntryTable from '../components/DataEntryTable'
 import SystemMonitorTable from '../components/SystemMonitorTable'
+import DataEntryModal from '../components/DataEntryModal'
+import ShowEntryDataInformation from '../components/ShowEntryDataInformation'
+import { useContext } from 'react'
+import { DialogContext } from '../context/DialogContext'
 
 function LayoutChallenge() {
+  const {currentDataId} = useContext(DialogContext)
   return (
+    <>
     <div className="page-container">
       <h2 className="page-title">Challenge 1: Layout & Functionality Fix</h2>
       
@@ -24,6 +30,10 @@ function LayoutChallenge() {
         <SystemMonitorTable />
       </div>
     </div>
+    <DataEntryModal>
+      <ShowEntryDataInformation entryDataId={currentDataId}  />
+    </DataEntryModal>
+    </>
   )
 }
 

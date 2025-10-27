@@ -152,4 +152,10 @@
     align-items: flex-start;
   }
 }
+@media (max-width: 400px) {
+  .stat-card{
+    flex-direction: column;
+  }
+}
+
 
