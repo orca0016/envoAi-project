@@ -126,6 +126,10 @@
   }
 }
 
+
+/* ===============================================
+responsive table media configurations.
+=============================================== */
 @media (min-width: 1025px) {
   [data-desktop="true"] {
     display: table-cell;

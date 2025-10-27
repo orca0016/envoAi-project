@@ -1,3 +1,9 @@
+/* ============================
+refactor: use flexbox instead of absolute for responsive design
+- Switch from absolute positioning to flex layout
+- Better responsive support for mobile/tablet
+- Improved accessibility and maintainability 
+============================ */
 .messy-layout {
   padding: 10px 0;
   display: flex;

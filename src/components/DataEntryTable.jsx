@@ -18,6 +18,7 @@ function DataEntryTable() {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
+    // -when a entry data deleted re get data and other time do nothing.
     if (currentDataId !== -1) return;
     const savedData = localStorage.getItem("userEntries");
     if (savedData) {
@@ -174,6 +175,10 @@ function DataEntryTable() {
         ) : (
           <table className="entries-table">
             <thead>
+              {/* ===================
+              i remove some columns for a better responsive table .
+                -to see other  information detail user most got to the modal section 
+              =================== */}
               <tr>
                 <th>Name</th>
                 <th data-desktop="true">Email</th>
