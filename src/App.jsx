@@ -35,6 +35,8 @@ function App() {
       </DataProvider>
     </Router>
   );
+  );
 }
 
+export default App;
 export default App;

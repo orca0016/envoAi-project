@@ -24,20 +24,40 @@ function BugHunt() {
 
   // Bug: Was summing quantities instead of calculating total price
   // Fix: Changed = to * for correct price calculation
+    const time = setInterval(() => {
+      setCounter(counter + 1);
+    }, 1000);
+
+    return () => clearInterval(time);
+  }, [counter]);
+
+  // Bug: Was summing quantities instead of calculating total price
+  // Fix: Changed = to * for correct price calculation
   const calculateTotal = () => {
+    let total = 0;
     let total = 0;
     for (let i = 0; i < items.length; i++) {
       total += items[i].price * items[i].quantity;
+      total += items[i].price * items[i].quantity;
     }
+    return total;
+  };
     return total;
   };
 
   // Fix discount calculation: was using wrong formula
   // Now correctly calculates: total - (total * discount / 100)
+  // Fix discount calculation: was using wrong formula
+  // Now correctly calculates: total - (total * discount / 100)
   const applyDiscount = (total) => {
     return total - total * (discount / 100);
   };
+    return total - total * (discount / 100);
+  };
 
+  // Fix login/logout state inversion
+  // Login sets isLoggedIn to true, logout sets to false
+  // Previously had reversed logic
   // Fix login/logout state inversion
   // Login sets isLoggedIn to true, logout sets to false
   // Previously had reversed logic
@@ -45,11 +65,22 @@ function BugHunt() {
     if (username.length < 3) {
       alert("Username must be at least 3 characters");
       return;
+      alert("Username must be at least 3 characters");
+      return;
     }
+    setIsLoggedIn(true);
+  };
     setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUsername("");
+  };
+
+  // Fix quantity update: was overwriting entire item object
+  // Now preserves all item properties while updating quantity
+  // Using spread operator to maintain existing data
     setIsLoggedIn(false);
     setUsername("");
   };
@@ -68,16 +99,31 @@ function BugHunt() {
   // Fix item removal: was keeping all items EXCEPT the selected one
   // Added ! to filter out only the item to be removed
   // Now correctly removes only the targeted item
+    setItems(
+      items.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  // Fix item removal: was keeping all items EXCEPT the selected one
+  // Added ! to filter out only the item to be removed
+  // Now correctly removes only the targeted item
   const removeItem = (id) => {
     setItems(items.filter((item) => item.id !== id));
   };
+    setItems(items.filter((item) => item.id !== id));
+  };
 
+  const total = calculateTotal();
+  const finalTotal = applyDiscount(total);
   const total = calculateTotal();
   const finalTotal = applyDiscount(total);
 
   return (
     <div className="page-container">
       <h2 className="page-title">Challenge 2: Bug Hunt</h2>
+
 
       <div className="instructions">
         <h3>Your Task:</h3>
@@ -86,7 +132,14 @@ function BugHunt() {
             This page contains <strong>6 logical bugs</strong> that need to be
             fixed
           </li>
+          <li>
+            This page contains <strong>6 logical bugs</strong> that need to be
+            fixed
+          </li>
           <li>The bugs are in the component logic, not in styling</li>
+          <li>
+            Test all features to identify what&apos;s not working correctly:
+          </li>
           <li>
             Test all features to identify what&apos;s not working correctly:
           </li>
@@ -106,6 +159,12 @@ function BugHunt() {
         {/* Counter Section */}
         <div className="section">
           <h3>Counter Feature</h3>
+          <p>
+            Counter: <b>{counter}</b>
+          </p>
+          <p className="hint">
+            ⚠️ Check the browser console and watch the counter behavior
+          </p>
           <p>
             Counter: <b>{counter}</b>
           </p>
@@ -152,6 +211,7 @@ function BugHunt() {
             </thead>
             <tbody>
               {items.map((item) => (
+              {items.map((item) => (
                 <tr key={item.id}>
                   <td>{item.name}</td>
                   <td>${item.price}</td>
@@ -162,12 +222,17 @@ function BugHunt() {
                       onChange={(e) =>
                         updateQuantity(item.id, parseInt(e.target.value) || 0)
                       }
+                      onChange={(e) =>
+                        updateQuantity(item.id, parseInt(e.target.value) || 0)
+                      }
                       min="0"
+                      style={{ width: "60px" }}
                       style={{ width: "60px" }}
                     />
                   </td>
                   <td>${(item.price * item.quantity).toFixed(2)}</td>
                   <td>
+                    <button
                     <button
                       onClick={() => removeItem(item.id)}
                       className="remove-btn"
@@ -186,6 +251,7 @@ function BugHunt() {
               <span>${total.toFixed(2)}</span>
             </div>
 
+
             <div className="discount-input">
               <label>Discount (%):</label>
               <input
@@ -195,14 +261,17 @@ function BugHunt() {
                 min="0"
                 max="100"
                 style={{ width: "80px" }}
+                style={{ width: "80px" }}
               />
             </div>
+
 
             <div className="total-row final">
               <span>Final Total:</span>
               <span>${finalTotal.toFixed(2)}</span>
             </div>
           </div>
+
 
           <p className="hint">
             Try: updating quantities, removing items, and applying a discount
@@ -226,10 +295,24 @@ function BugHunt() {
           <li>
             <strong>Fix Applied:</strong> How did you fix it?
           </li>
+          <li>
+            <strong>Bug Location:</strong> Where is the bug?
+          </li>
+          <li>
+            <strong>Expected Behavior:</strong> What should happen?
+          </li>
+          <li>
+            <strong>Actual Behavior:</strong> What actually happens?
+          </li>
+          <li>
+            <strong>Fix Applied:</strong> How did you fix it?
+          </li>
         </ol>
       </div>
     </div>
   );
+  );
 }
 
+export default BugHunt;
 export default BugHunt;
